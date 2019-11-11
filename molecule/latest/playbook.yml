@@ -1,0 +1,10 @@
+---
+- name: Run role
+  hosts: all
+  any_errors_fatal: true
+  roles:
+    - ansible-smokeping_prober
+  vars:
+    smokeping_prober: latest
+    smokeping_prober_hosts:
+      - 8.8.8.8

@@ -1,0 +1,49 @@
+---
+- name: Create the smokeping_prober group
+  group:
+    name: "{{ smokeping_prober_system_group }}"
+    state: present
+    system: true
+
+- name: Create the smokeping_prober user
+  user:
+    name: "{{ smokeping_prober_system_user }}"
+    groups: "{{ smokeping_prober_system_group }}"
+    append: true
+    shell: /usr/sbin/nologin
+    system: true
+    createhome: false
+    home: /
+
+- name: download smokeping_prober binary to local folder
+  become: false
+  get_url:
+    url: "https://github.com/superq/smokeping_prober/releases/download/v{{ smokeping_prober_version }}/smokeping_prober-{{ smokeping_prober_version }}.linux-{{ go_arch }}.tar.gz"
+    dest: "/tmp/smokeping_prober-{{ smokeping_prober_version }}.linux-{{ go_arch }}.tar.gz"
+    checksum: "sha256:{{ smokeping_prober_checksum }}"
+  register: _download_archive
+  until: _download_archive is succeeded
+  retries: 5
+  delay: 2
+  # run_once: true # <-- this can't be set due to multi-arch support
+  delegate_to: localhost
+  check_mode: false
+
+- name: unpack smokeping_prober binary
+  become: false
+  unarchive:
+    src: "/tmp/smokeping_prober-{{ smokeping_prober_version }}.linux-{{ go_arch }}.tar.gz"
+    dest: "/tmp"
+    creates: "/tmp/smokeping_prober-{{ smokeping_prober_version }}.linux-{{ go_arch }}/smokeping_prober"
+  delegate_to: localhost
+  check_mode: false
+
+- name: propagate official smokeping_prober and amtool binaries
+  copy:
+    src: "/tmp/smokeping_prober-{{ smokeping_prober_version }}.linux-{{ go_arch }}/smokeping_prober"
+    dest: "/usr/local/bin/smokeping_prober"
+    mode: 0755
+    owner: root
+    group: root
+  notify:
+    - restart smokeping_prober

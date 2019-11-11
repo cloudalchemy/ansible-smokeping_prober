@@ -1,0 +1,57 @@
+---
+- name: Assert usage of systemd as an init system
+  assert:
+    that: ansible_service_mgr == 'systemd'
+    msg: "This module only works with systemd"
+
+- name: Get systemd version
+  command: systemctl --version
+  changed_when: false
+  check_mode: false
+  register: __systemd_version
+  tags:
+    - skip_ansible_lint
+
+- name: Set systemd version fact
+  set_fact:
+    smokeping_prober_systemd_version: "{{ __systemd_version.stdout_lines[0].split(' ')[-1] }}"
+
+- name: Assert there are hosts to ping
+  assert:
+    that: smokeping_prober_hosts | length != 0
+    msg: "You need to pass hosts which will be pinged"
+
+- name: Assert ping interval is set
+  assert:
+    that: smokeping_prober_ping_interval | length != 0
+    msg: "You need to specify ping interval"
+
+- block:
+    - name: Get latest release
+      uri:
+        url: "https://api.github.com/repos/superq/smokeping_prober/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+        validate_certs: false
+        user: "{{ lookup('env', 'GH_USER') | default(omit) }}"
+        password: "{{ lookup('env', 'GH_TOKEN') | default(omit) }}"
+      no_log: "{{ not lookup('env', 'MOLECULE_DEBUG') | bool }}"
+      register: _latest_release
+      until: _latest_release.status == 200
+      retries: 5
+
+    - name: "Set smokeping_prober version to {{ _latest_release.json.tag_name[1:] }}"
+      set_fact:
+        smokeping_prober_version: "{{ _latest_release.json.tag_name[1:] }}"
+  when:
+    - smokeping_prober_version == "latest"
+
+- name: "Get checksum for {{ go_arch }} architecture"
+  set_fact:
+    smokeping_prober_checksum: "{{ item.split(' ')[0] }}"
+  with_items:
+    - "{{ lookup('url', 'https://github.com/superq/smokeping_prober/releases/download/v' + smokeping_prober_version + '/sha256sums.txt', wantlist=True) | list }}"
+  when:
+    - "('linux-' + go_arch + '.tar.gz') in item"

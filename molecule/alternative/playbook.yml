@@ -1,0 +1,13 @@
+---
+- hosts: all
+  any_errors_fatal: true
+  roles:
+    - ansible-smokeping_prober
+  vars:
+    smokeping_prober_web_listen_address: "127.0.0.1:9000"
+    smokeping_prober_web_telemetry_path: "/m"
+    smokeping_prober_buckets: '5e-06,5e-05,0.0001,0.0002,0.0004,0.0008,0.0016,0.0032,0.0064,0.0128,0.0256,0.0512,0.1024,0.2048,0.4096,0.8192,1.6384,3.2768,6.5536,13.1072'
+    smokeping_prober_ping_interval: '2s'
+    smokeping_prober_hosts:
+      - 8.8.8.8
+      - 1.1.1.1

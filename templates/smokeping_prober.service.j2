@@ -1,0 +1,57 @@
+{{ ansible_managed | comment }}
+
+[Unit]
+Description=smokeping_prober
+After=network-online.target
+StartLimitInterval=0
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User={{ smokeping_prober_system_user }}
+Group={{ smokeping_prober_system_group }}
+ExecStart=/usr/local/bin/smokeping_prober \
+  --web.listen-address={{ smokeping_prober_web_listen_address }} \
+  --web.telemetry-path={{ smokeping_prober_web_telemetry_path }} \
+{% if smokeping_prober_buckets != '' %}
+  --buckets={{ smokeping_prober_buckets }} \
+{% endif %}
+  --ping.interval={{ smokeping_prober_ping_interval }} \
+  --privileged={{ smokeping_prober_privileged }} \
+  {% for host in smokeping_prober_hosts %}{{ host }} {% endfor %}
+
+SyslogIdentifier=smokeping_prober
+Restart=always
+RestartSec=5
+
+{% if smokeping_prober_privileged %}
+CapabilityBoundingSet=CAP_NET_RAW
+AmbientCapabilities=CAP_NET_RAW
+{% endif %}
+
+LimitNOFILE=65000
+LockPersonality=true
+NoNewPrivileges=true
+MemoryDenyWriteExecute=true
+PrivateDevices=true
+PrivateTmp=true
+ProtectHome=true
+RemoveIPC=true
+RestrictSUIDSGID=true
+
+{% if smokeping_prober_systemd_version | int >= 232 %}
+PrivateUsers=true
+ProtectControlGroups=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=strict
+{% else %}
+ProtectSystem=full
+{% endif %}
+
+{% if http_proxy is defined %}
+Environment="HTTP_PROXY={{ http_proxy }}"{% if https_proxy is defined %} "HTTPS_PROXY={{ https_proxy }}{% endif %}"
+{% endif %}
+
+[Install]
+WantedBy=multi-user.target

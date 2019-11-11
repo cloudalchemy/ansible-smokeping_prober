@@ -1,0 +1,10 @@
+---
+smokeping_prober_version: 0.3.0
+
+smokeping_prober_web_listen_address: "0.0.0.0:9374"
+smokeping_prober_web_telemetry_path: "/metrics"
+
+smokeping_prober_buckets: ''
+smokeping_prober_ping_interval: '1s'
+smokeping_prober_privileged: true
+smokeping_prober_hosts: []

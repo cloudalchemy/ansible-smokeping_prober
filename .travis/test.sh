@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-if [ ! -d "./molecule/latest" ]; then	
+if [ ! -d "./molecule/latest" ]; then
 	tox -- molecule test --all
 	exit 0
 fi

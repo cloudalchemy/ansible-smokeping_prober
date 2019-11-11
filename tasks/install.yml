@@ -38,7 +38,7 @@
   delegate_to: localhost
   check_mode: false
 
-- name: propagate official smokeping_prober and amtool binaries
+- name: propagate smokeping_prober binary
   copy:
     src: "/tmp/smokeping_prober-{{ smokeping_prober_version }}.linux-{{ go_arch }}/smokeping_prober"
     dest: "/usr/local/bin/smokeping_prober"

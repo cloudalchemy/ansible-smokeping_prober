@@ -13,20 +13,6 @@ def AnsibleDefaults():
         return yaml.load(stream)
 
 
-@pytest.mark.parametrize("dirs", [
-    "/etc/prometheus",
-    "/etc/prometheus/console_libraries",
-    "/etc/prometheus/consoles",
-    "/etc/prometheus/rules",
-    "/etc/prometheus/file_sd",
-    "/var/lib/prometheus"
-])
-def test_directories(host, dirs):
-    d = host.file(dirs)
-    assert d.is_directory
-    assert d.exists
-
-
 @pytest.mark.parametrize("files", [
     "/etc/systemd/system/smokeping_prober.service",
     "/usr/local/bin/smokeping_prober"

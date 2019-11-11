@@ -30,5 +30,5 @@ def test_service(host):
 
 
 def test_socket(host):
-    s = host.socket("tcp://127.0.0.1:9000")
+    s = host.socket("tcp://0.0.0.0:9000")
     assert s.is_listening

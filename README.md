@@ -12,7 +12,7 @@ Deploy [smokeping_prober](https://github.com/SuperQ/smokeping_prober) using ansi
 
 ## Requirements
 
-- Ansible >= 2.7 (It might work on previous versions, but we cannot guarantee it)
+- Ansible >= 2.6 (It might work on previous versions, but we cannot guarantee it)
 
 ## Role Variables
 

@@ -40,7 +40,6 @@ RemoveIPC=true
 RestrictSUIDSGID=true
 
 {% if smokeping_prober_systemd_version | int >= 232 %}
-PrivateUsers=true
 ProtectControlGroups=true
 ProtectKernelModules=true
 ProtectKernelTunables=true

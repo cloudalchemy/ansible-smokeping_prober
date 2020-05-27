@@ -17,7 +17,9 @@ ExecStart=/usr/local/bin/smokeping_prober \
   --buckets={{ smokeping_prober_buckets }} \
 {% endif %}
   --ping.interval={{ smokeping_prober_ping_interval }} \
-  --privileged={{ smokeping_prober_privileged }} \
+{% if smokeping_prober_privileged is defined and smokeping_prober_privileged == True %}
+  --privileged \
+{% endif %}
   {% for host in smokeping_prober_hosts %}{{ host }} {% endfor %}
 
 SyslogIdentifier=smokeping_prober

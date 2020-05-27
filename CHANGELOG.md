@@ -2,8 +2,14 @@
 
 ## [**Next release**](https://galaxy.ansible.com/cloudalchemy/smokeping_prober)
 
+**Fixed bugs:**
+
+- smokeping\_prober doesn't start with  'True' passed to --privileged flag [\#12](https://github.com/cloudalchemy/ansible-smokeping_prober/issues/12)
+
 **Merged pull requests:**
 
+- Remove 'True' from --privileged flag in unit file [\#13](https://github.com/cloudalchemy/ansible-smokeping_prober/pull/13) ([obitech](https://github.com/obitech))
+- \[REPO SYNC\] lock molecule to v2 [\#11](https://github.com/cloudalchemy/ansible-smokeping_prober/pull/11) ([cloudalchemybot](https://github.com/cloudalchemybot))
 - \[REPO SYNC\] use latest available python [\#7](https://github.com/cloudalchemy/ansible-smokeping_prober/pull/7) ([cloudalchemybot](https://github.com/cloudalchemybot))
 - \[REPO SYNC\] remove IRC link [\#6](https://github.com/cloudalchemy/ansible-smokeping_prober/pull/6) ([cloudalchemybot](https://github.com/cloudalchemybot))
 - \[REPO SYNC\] add declarative label sync; add autolabelling PRs [\#5](https://github.com/cloudalchemy/ansible-smokeping_prober/pull/5) ([cloudalchemybot](https://github.com/cloudalchemybot))

@@ -8,6 +8,7 @@
 
 **Merged pull requests:**
 
+- \[REPO SYNC\] Add passlib as a test requirement [\#16](https://github.com/cloudalchemy/ansible-smokeping_prober/pull/16) ([cloudalchemybot](https://github.com/cloudalchemybot))
 - Remove 'True' from --privileged flag in unit file [\#13](https://github.com/cloudalchemy/ansible-smokeping_prober/pull/13) ([obitech](https://github.com/obitech))
 - \[REPO SYNC\] lock molecule to v2 [\#11](https://github.com/cloudalchemy/ansible-smokeping_prober/pull/11) ([cloudalchemybot](https://github.com/cloudalchemybot))
 - \[REPO SYNC\] use latest available python [\#7](https://github.com/cloudalchemy/ansible-smokeping_prober/pull/7) ([cloudalchemybot](https://github.com/cloudalchemybot))

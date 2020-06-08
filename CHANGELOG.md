@@ -1,8 +1,6 @@
-
 # Change Log
 
-## [**Next release**](https://galaxy.ansible.com/cloudalchemy/smokeping_prober)
-
+## [0.1.0](https://galaxy.ansible.com/cloudalchemy/smokeping_prober) (2020-06-08)
 **Fixed bugs:**
 
 - smokeping\_prober doesn't start with  'True' passed to --privileged flag [\#12](https://github.com/cloudalchemy/ansible-smokeping_prober/issues/12)

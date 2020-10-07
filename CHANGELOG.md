@@ -1,5 +1,11 @@
 # Change Log
 
+## [**Next release**](https://galaxy.ansible.com/cloudalchemy/smokeping_prober)
+
+**Merged pull requests:**
+
+- \[REPO SYNC\] Update .ansible-lint [\#17](https://github.com/cloudalchemy/ansible-smokeping_prober/pull/17) ([cloudalchemybot](https://github.com/cloudalchemybot))
+
 ## [0.1.0](https://galaxy.ansible.com/cloudalchemy/smokeping_prober) (2020-06-08)
 **Fixed bugs:**
 
